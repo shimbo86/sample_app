@@ -20,5 +20,8 @@
 # Ignore Byebug command history file.
 .byebug_history
 
-# Ignore Spring files.
-/spring/*.pid
+#ignore spring when using Guard
+
+
+# Ignore uploaded test images.
+/public/uploads
