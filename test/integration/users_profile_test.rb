@@ -16,7 +16,19 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     assert_match @user.microposts.count.to_s, response.body
     assert_select 'div.pagination', count: 1
     @user.microposts.paginate(page: 1).each do |micropost|
-      assert_match micropost.content, response.body
-    end
+     assert_match micropost.content, response.body
+    end    
+  end
+
+  test "stats display" do
+    log_in_as(@user)
+    get root_path
+    assert_response :success
+    assert_select 'section.stats', count: 1
+    assert_select 'div.stats', count: 1
+    assert_select 'strong.stat#following', count: 1
+    assert_select 'a[href=?]', following_user_path(@user)
+    assert_select 'strong.stat#followers', count: 1
+    assert_select 'a[href=?]', followers_user_path(@user)
   end
 end
